@@ -78,7 +78,7 @@
         'https://media.giphy.com/media/Wq1NgAUMBA4qLbCYgX/giphy.gif',  // Third please  
         'https://media.giphy.com/media/e1Tf1eOo6976zuGv3C/giphy.gif',  // Fourth please (replaced)  
         'https://media.giphy.com/media/2aw9gwZlltbdX92b4w/giphy.gif',  // Fifth please (replaced)  
-        'https://media.giphy.com/media/9KI8vyCCAOqHbcMYd2/giphy.gif'   // Sixth please (replaced)  
+        // The sixth gif is now handled directly in the code with the "Please say Yes" message
     ];  
     const noColors = [  
         '#f44336',  // Original red  
@@ -92,21 +92,23 @@
 
     noBtn.addEventListener('click', () => {  
         if (question.textContent === 'Shaida, are you angry with Saksham?') {  
-            question.textContent = 'Case closed! Saksham is off the hook!';  
+            question.textContent = 'Case closed!';  
             yesBtn.style.display = 'none';  
             noBtn.style.display = 'none';
             restartContainer.style.display = 'block';
         } else if (question.textContent === 'Saksham is very sorry, will you forgive him?') {  
-            if (noClickCount < 6) {  
-                gifContainer.style.display = 'block';  
+            gifContainer.style.display = 'block';
+            if (noClickCount < 5) {  
                 puppyGif.src = puppyGifs[noClickCount];  
                 noBtn.style.backgroundColor = noColors[noClickCount];  
                 noClickCount++;  
-            } else {  
+            } else if (noClickCount === 5) {
+                puppyGif.src = 'https://media.giphy.com/media/K4rStH7TvNsssMBgyR/giphy.gif';
                 noBtn.textContent = 'Please say Yes';  
                 noBtn.style.backgroundColor = noColors[6];  
                 noBtn.style.cursor = 'not-allowed';  
                 noBtn.disabled = true;  // Makes it unclickable  
+                noClickCount++; 
             }  
         }  
     });  
@@ -134,6 +136,7 @@
         noBtn.style.cursor = 'pointer';
         noBtn.disabled = false;
         gifContainer.style.display = 'none';
+        puppyGif.src = '';
         restartContainer.style.display = 'none';
         noClickCount = 0;
     });
