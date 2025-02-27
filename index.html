@@ -1,0 +1,142 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Shaida, Forgive Saksham!</title>  
+    <style>  
+        body {  
+            font-family: Arial, sans-serif;  
+            display: flex;  
+            flex-direction: column;  
+            align-items: center;  
+            justify-content: center;  
+            height: 100vh;  
+            margin: 0;  
+            background-color: #f0f0f0;  
+        }  
+        #question {  
+            font-size: 24px;  
+            margin-bottom: 20px;  
+            text-align: center;  
+        }  
+        #buttons {  
+            display: flex;  
+            gap: 20px;  
+        }  
+        button {  
+            padding: 10px 20px;  
+            font-size: 18px;  
+            cursor: pointer;  
+            border: none;  
+            border-radius: 5px;  
+            transition: background-color 0.3s;  
+        }  
+        #yesBtn {  
+            background-color: #4CAF50;  
+            color: white;  
+        }  
+        #noBtn {  
+            background-color: #f44336;  
+            color: white;  
+        }  
+        #gifContainer {  
+            margin-top: 20px;  
+            display: none;  
+        }  
+        img {  
+            max-width: 300px;  
+            height: auto;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <div id="question">Shaida, are you angry with Saksham?</div>  
+    <div id="buttons">  
+        <button id="yesBtn">Yes</button>  
+        <button id="noBtn">No</button>  
+    </div>  
+    <div id="gifContainer">  
+        <img id="puppyGif" src="" alt="Puppy Gif">  
+    </div>  
+    <div id="restartContainer" style="margin-top: 20px; display: none;">
+        <button id="restartBtn" style="background-color: #2196f3; color: white;">Start Again</button>
+    </div>
+    <script>  
+    const question = document.getElementById('question');  
+    const yesBtn = document.getElementById('yesBtn');  
+    const noBtn = document.getElementById('noBtn');  
+    const gifContainer = document.getElementById('gifContainer');  
+    const puppyGif = document.getElementById('puppyGif');
+    const restartContainer = document.getElementById('restartContainer');
+    const restartBtn = document.getElementById('restartBtn');
+
+    let noClickCount = 0;  
+    const puppyGifs = [  
+        'https://media.giphy.com/media/los0R5UJA9bOuTmK7t/giphy.gif',  // First please  
+        'https://media.giphy.com/media/sZ2YXmiqIfCd0iAmbo/giphy.gif',  // Second please  
+        'https://media.giphy.com/media/Wq1NgAUMBA4qLbCYgX/giphy.gif',  // Third please  
+        'https://media.giphy.com/media/e1Tf1eOo6976zuGv3C/giphy.gif',  // Fourth please (replaced)  
+        'https://media.giphy.com/media/2aw9gwZlltbdX92b4w/giphy.gif',  // Fifth please (replaced)  
+        'https://media.giphy.com/media/9KI8vyCCAOqHbcMYd2/giphy.gif'   // Sixth please (replaced)  
+    ];  
+    const noColors = [  
+        '#f44336',  // Original red  
+        '#ff9800',  // Orange  
+        '#ffeb3b',  // Yellow  
+        '#2196f3',  // Blue  
+        '#9c27b0',  // Purple  
+        '#00bcd4',  // Cyan  
+        '#ff5722'   // Final "Please say Yes" (deep orange)  
+    ];  
+
+    noBtn.addEventListener('click', () => {  
+        if (question.textContent === 'Shaida, are you angry with Saksham?') {  
+            question.textContent = 'Case closed! Saksham is off the hook!';  
+            yesBtn.style.display = 'none';  
+            noBtn.style.display = 'none';
+            restartContainer.style.display = 'block';
+        } else if (question.textContent === 'Saksham is very sorry, will you forgive him?') {  
+            if (noClickCount < 6) {  
+                gifContainer.style.display = 'block';  
+                puppyGif.src = puppyGifs[noClickCount];  
+                noBtn.style.backgroundColor = noColors[noClickCount];  
+                noClickCount++;  
+            } else {  
+                noBtn.textContent = 'Please say Yes';  
+                noBtn.style.backgroundColor = noColors[6];  
+                noBtn.style.cursor = 'not-allowed';  
+                noBtn.disabled = true;  // Makes it unclickable  
+            }  
+        }  
+    });  
+
+    yesBtn.addEventListener('click', () => {  
+        if (question.textContent === 'Shaida, are you angry with Saksham?') {  
+            question.textContent = 'Saksham is very sorry, will you forgive him?';  
+        } else if (question.textContent === 'Saksham is very sorry, will you forgive him?') {  
+            question.textContent = 'Thank you for forgiving Saksham!';  
+            yesBtn.style.display = 'none';  
+            noBtn.style.display = 'none';  
+            gifContainer.style.display = 'block';  
+            puppyGif.src = 'https://media.giphy.com/media/FPDZV2JGkNGeUZdi7G/giphy.gif';  // Thank you
+            restartContainer.style.display = 'block';
+        }  
+    });
+    
+    restartBtn.addEventListener('click', () => {
+        // Reset everything to initial state
+        question.textContent = 'Shaida, are you angry with Saksham?';
+        yesBtn.style.display = 'inline-block';
+        noBtn.style.display = 'inline-block';
+        noBtn.textContent = 'No';
+        noBtn.style.backgroundColor = '#f44336';
+        noBtn.style.cursor = 'pointer';
+        noBtn.disabled = false;
+        gifContainer.style.display = 'none';
+        restartContainer.style.display = 'none';
+        noClickCount = 0;
+    });
+    </script>
+</body>  
+</html>
